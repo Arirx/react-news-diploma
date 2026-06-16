@@ -12,6 +12,8 @@ api.interceptors.response.use(
   (error) => {
     if (error.response) {
       console.error('API Error:', error.response.data);
+      console.error('Status:', error.response.status);
+      console.error('URL:', error.config?.url);
     } else if (error.request) {
       console.error('Network Error:', ERROR_MESSAGES.NETWORK_ERROR);
     } else {
@@ -34,7 +36,7 @@ export const spaceflightApi = {
 
   searchArticles: async (search: string, params: GetArticlesParams = {}): Promise<ApiResponse<Article>> => {
     const { data } = await api.get<ApiResponse<Article>>('/articles', {
-      params: { ...params, title_contains: search },
+      params: { ...params, search },
     });
     return data;
   },

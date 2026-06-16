@@ -1,13 +1,13 @@
 // API константы
-export const API_BASE_URL = 'https://api.spaceflightnewsapi.net/v3';
+export const API_BASE_URL = 'https://api.spaceflightnewsapi.net/v4';
 export const API_TIMEOUT = 10000;
 
-export const DEFAULT_PAGE_SIZE = 10;
+export const DEFAULT_PAGE_SIZE = 12;
 export const DEFAULT_PAGE = 1;
 
 export const SORT_OPTIONS = {
-  NEWEST: '-publishedAt',
-  OLDEST: 'publishedAt',
+  NEWEST: '-published_at',
+  OLDEST: 'published_at',
   TITLE_ASC: 'title',
   TITLE_DESC: '-title',
 } as const;
@@ -56,4 +56,5 @@ export const UI_TEXTS = {
   LOADING: 'Loading...',
   ERROR_TITLE: 'Error',
   BACK_TO_HOME: 'Back to Home',
+  NOT_FOUND: 'Article not found',
 } as const;

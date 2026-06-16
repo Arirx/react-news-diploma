@@ -4,18 +4,31 @@ export interface Article {
   id: number;
   title: string;
   url: string;
-  imageUrl: string;
-  newsSite: string;
+  image_url: string;
+  news_site: string;
   summary: string;
-  publishedAt: string;
-  updatedAt: string;
+  published_at: string;
+  updated_at: string;
   featured: boolean;
   launches: Launch[];
   events: Event[];
+  authors?: Author[];
+}
+
+export interface Author {
+  name: string;
+  socials: {
+    x?: string;
+    youtube?: string;
+    instagram?: string;
+    linkedin?: string;
+    mastodon?: string;
+    bluesky?: string;
+  } | null;
 }
 
 export interface Launch {
-  id: string;
+  launch_id: string;
   provider: string;
 }
 
@@ -28,7 +41,7 @@ export interface GetArticlesParams {
   limit?: number;
   offset?: number;
   search?: string;
-  ordering?: string;
+  order?: string;
 }
 
 export interface ApiResponse<T> {

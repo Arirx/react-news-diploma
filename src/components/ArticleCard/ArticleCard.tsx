@@ -9,7 +9,7 @@ interface ArticleCardProps {
 }
 
 export const ArticleCard: React.FC<ArticleCardProps> = ({ article }) => {
-  const formattedDate = new Date(article.publishedAt).toLocaleDateString(
+  const formattedDate = new Date(article.published_at).toLocaleDateString(
     'en-US',
     DATE_FORMAT_OPTIONS
   );
@@ -21,11 +21,11 @@ export const ArticleCard: React.FC<ArticleCardProps> = ({ article }) => {
   return (
     <Link to={ROUTES.ARTICLE_BY_ID(article.id)} className={styles.articleCard}>
       <div className={styles.articleCardImage}>
-        <img src={article.imageUrl} alt={article.title} />
+        <img src={article.image_url} alt={article.title} />
       </div>
       <div className={styles.articleCardContent}>
         <div className={styles.articleCardMeta}>
-          <span className={styles.articleCardSource}>{article.newsSite}</span>
+          <span className={styles.articleCardSource}>{article.news_site}</span>
           <span className={styles.articleCardDate}>{formattedDate}</span>
         </div>
         <h3 className={styles.articleCardTitle}>{article.title}</h3>
