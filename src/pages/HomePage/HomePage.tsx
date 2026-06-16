@@ -6,6 +6,7 @@ import { ArticleCard } from '../../components/ArticleCard/ArticleCard';
 import { Pagination } from '../../components/Pagination/Pagination';
 import { SearchBar } from '../../components/SearchBar/SearchBar';
 import { SORT_OPTIONS, SORT_LABELS, UI_TEXTS } from '../../constants';
+import { Article } from '../../types';
 import styles from './HomePage.module.css';
 
 export const HomePage: React.FC = () => {
@@ -13,24 +14,28 @@ export const HomePage: React.FC = () => {
   const { articles, isLoading, error, totalCount, currentPage, pageSize, searchQuery, sortBy } =
     useAppSelector((state) => state.articles);
   
-  const [showSortMenu, setShowSortMenu] = useState(false);
+  const [showSortMenu, setShowSortMenu] = useState<boolean>(false);
 
-  const sortedArticles = useMemo(() => {
+  const sortedArticles = useMemo((): Article[] => {
     if (!articles.length) return [];
     
-    const sorted = [...articles];
+    const sorted: Article[] = [...articles];
     switch (sortBy) {
       case SORT_OPTIONS.NEWEST:
-        sorted.sort((a, b) => new Date(b.published_at).getTime() - new Date(a.published_at).getTime());
+        sorted.sort((a: Article, b: Article) => 
+          new Date(b.published_at).getTime() - new Date(a.published_at).getTime()
+        );
         break;
       case SORT_OPTIONS.OLDEST:
-        sorted.sort((a, b) => new Date(a.published_at).getTime() - new Date(b.published_at).getTime());
+        sorted.sort((a: Article, b: Article) => 
+          new Date(a.published_at).getTime() - new Date(b.published_at).getTime()
+        );
         break;
       case SORT_OPTIONS.TITLE_ASC:
-        sorted.sort((a, b) => a.title.localeCompare(b.title));
+        sorted.sort((a: Article, b: Article) => a.title.localeCompare(b.title));
         break;
       case SORT_OPTIONS.TITLE_DESC:
-        sorted.sort((a, b) => b.title.localeCompare(a.title));
+        sorted.sort((a: Article, b: Article) => b.title.localeCompare(a.title));
         break;
       default:
         break;
@@ -43,17 +48,17 @@ export const HomePage: React.FC = () => {
     dispatch(fetchArticles());
   }, [dispatch, currentPage, searchQuery, sortBy]);
 
-  const handlePageChange = (page: number) => {
+  const handlePageChange = (page: number): void => {
     dispatch(setCurrentPage(page));
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const handleSearch = (query: string) => {
+  const handleSearch = (query: string): void => {
     console.log('Searching:', query);
     dispatch(setSearchQuery(query));
   };
 
-  const handleSortChange = (sortOption: typeof SORT_OPTIONS[keyof typeof SORT_OPTIONS]) => {
+  const handleSortChange = (sortOption: typeof SORT_OPTIONS[keyof typeof SORT_OPTIONS]): void => {
     console.log('Changing sort to:', sortOption);
     dispatch(setSortBy(sortOption));
     setShowSortMenu(false);
@@ -117,7 +122,7 @@ export const HomePage: React.FC = () => {
       ) : (
         <>
           <div className={styles.articlesGrid}>
-            {sortedArticles.map((article) => (
+            {sortedArticles.map((article: Article) => (
               <ArticleCard key={article.id} article={article} />
             ))}
           </div>

@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Article, ArticlesState } from '../../types';
-import { fetchArticles, fetchArticleById } from './articlesThunks';
+import { fetchArticles, fetchArticleById, searchArticles } from './articlesThunks';
 import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE, SORT_OPTIONS } from '../../constants';
 
 const initialState: ArticlesState = {
@@ -25,22 +25,16 @@ const articlesSlice = createSlice({
     setSearchQuery: (state, action: PayloadAction<string>) => {
       state.searchQuery = action.payload;
       state.currentPage = DEFAULT_PAGE;
-      state.articles = [];
     },
     setSortBy: (state, action: PayloadAction<typeof SORT_OPTIONS[keyof typeof SORT_OPTIONS]>) => {
       state.sortBy = action.payload;
       state.currentPage = DEFAULT_PAGE;
-      state.articles = [];
     },
     clearCurrentArticle: (state) => {
       state.currentArticle = null;
     },
     clearError: (state) => {
       state.error = null;
-    },
-    clearArticles: (state) => {
-      state.articles = [];
-      state.totalCount = 0;
     },
   },
   extraReducers: (builder) => {
@@ -69,6 +63,19 @@ const articlesSlice = createSlice({
       .addCase(fetchArticleById.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload as string || 'Failed to fetch article';
+      })
+      .addCase(searchArticles.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(searchArticles.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.articles = action.payload.results;
+        state.totalCount = action.payload.count;
+      })
+      .addCase(searchArticles.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload as string || 'Failed to search articles';
       });
   },
 });
@@ -79,7 +86,6 @@ export const {
   setSortBy,
   clearCurrentArticle,
   clearError,
-  clearArticles,
 } = articlesSlice.actions;
 
 export default articlesSlice.reducer;

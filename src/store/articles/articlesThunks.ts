@@ -4,6 +4,14 @@ import { GetArticlesParams } from '../../types';
 import { RootState } from '../index';
 import { ERROR_MESSAGES } from '../../constants';
 
+type ApiError = {
+  message: string;
+  response?: {
+    data?: unknown;
+    status?: number;
+  };
+};
+
 export const fetchArticles = createAsyncThunk(
   'articles/fetchArticles',
   async (_, { getState, rejectWithValue }) => {
@@ -30,9 +38,10 @@ export const fetchArticles = createAsyncThunk(
       const result = await spaceflightApi.getArticles(params);
       console.log('API Response received, articles count:', result.results.length);
       return result;
-    } catch (error: any) {
+    } catch (error) {
       console.error('Error fetching articles:', error);
-      return rejectWithValue(error.message || ERROR_MESSAGES.FETCH_ARTICLES);
+      const errorMessage = error instanceof Error ? error.message : ERROR_MESSAGES.FETCH_ARTICLES;
+      return rejectWithValue(errorMessage);
     }
   }
 );
@@ -44,9 +53,10 @@ export const fetchArticleById = createAsyncThunk(
       console.log('Fetching article by ID:', id);
       const article = await spaceflightApi.getArticleById(id);
       return article;
-    } catch (error: any) {
+    } catch (error) {
       console.error('Error fetching article:', error);
-      return rejectWithValue(error.message || ERROR_MESSAGES.FETCH_ARTICLE);
+      const errorMessage = error instanceof Error ? error.message : ERROR_MESSAGES.FETCH_ARTICLE;
+      return rejectWithValue(errorMessage);
     }
   }
 );
@@ -72,9 +82,10 @@ export const searchArticles = createAsyncThunk(
       const result = await spaceflightApi.searchArticles(searchQuery, params);
       console.log('Search result, articles count:', result.results.length);
       return result;
-    } catch (error: any) {
+    } catch (error) {
       console.error('Error searching articles:', error);
-      return rejectWithValue(error.message || ERROR_MESSAGES.SEARCH_ARTICLES);
+      const errorMessage = error instanceof Error ? error.message : ERROR_MESSAGES.SEARCH_ARTICLES;
+      return rejectWithValue(errorMessage);
     }
   }
 );

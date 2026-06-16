@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import { Article, ApiResponse, GetArticlesParams } from '../types';
 import { API_BASE_URL, API_TIMEOUT, ERROR_MESSAGES } from '../constants';
 
@@ -9,7 +9,7 @@ const api = axios.create({
 
 api.interceptors.response.use(
   (response) => response,
-  (error) => {
+  (error: AxiosError) => {
     if (error.response) {
       console.error('API Error:', error.response.data);
       console.error('Status:', error.response.status);
