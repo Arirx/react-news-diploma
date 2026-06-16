@@ -41,6 +41,7 @@ export interface GetArticlesParams {
   limit?: number;
   offset?: number;
   search?: string;
+  title_contains?: string;
   order?: string;
 }
 

@@ -36,7 +36,10 @@ export const spaceflightApi = {
 
   searchArticles: async (search: string, params: GetArticlesParams = {}): Promise<ApiResponse<Article>> => {
     const { data } = await api.get<ApiResponse<Article>>('/articles', {
-      params: { ...params, search },
+      params: { 
+        ...params, 
+        title_contains: search
+      },
     });
     return data;
   },

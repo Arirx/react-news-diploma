@@ -13,20 +13,33 @@ export const SearchBar: React.FC<SearchBarProps> = ({
   initialValue = '',
   placeholder = UI_TEXTS.SEARCH_PLACEHOLDER,
 }) => {
-  const [query, setQuery] = useState(initialValue);
+  const [query, setQuery] = useState<string>(initialValue);
 
   useEffect(() => {
     setQuery(initialValue);
   }, [initialValue]);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
-    onSearch(query);
+    const trimmedQuery = query.trim();
+    if (trimmedQuery.length >= 2) {
+      onSearch(trimmedQuery);
+    } else if (trimmedQuery.length === 0) {
+      onSearch('');
+    }
   };
 
-  const handleClear = () => {
+  const handleClear = (): void => {
     setQuery('');
     onSearch('');
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    const value = e.target.value;
+    setQuery(value);
+    if (value.trim() === '') {
+      onSearch('');
+    }
   };
 
   return (
@@ -35,7 +48,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
         <input
           type="text"
           value={query}
-          onChange={(e) => setQuery(e.target.value)}
+          onChange={handleInputChange}
           placeholder={placeholder}
           className={styles.searchInput}
         />

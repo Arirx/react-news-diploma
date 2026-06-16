@@ -4,14 +4,6 @@ import { GetArticlesParams } from '../../types';
 import { RootState } from '../index';
 import { ERROR_MESSAGES } from '../../constants';
 
-type ApiError = {
-  message: string;
-  response?: {
-    data?: unknown;
-    status?: number;
-  };
-};
-
 export const fetchArticles = createAsyncThunk(
   'articles/fetchArticles',
   async (_, { getState, rejectWithValue }) => {
@@ -30,13 +22,15 @@ export const fetchArticles = createAsyncThunk(
       }
 
       if (searchQuery) {
-        params.search = searchQuery;
-        console.log('Adding search parameter:', searchQuery);
+        console.log('Searching by title:', searchQuery);
+        const result = await spaceflightApi.searchArticles(searchQuery, params);
+        console.log('Search results:', result.results.length);
+        return result;
       }
 
-      console.log('Final params for API:', params);
+      console.log('Fetching articles with params:', params);
       const result = await spaceflightApi.getArticles(params);
-      console.log('API Response received, articles count:', result.results.length);
+      console.log('Articles loaded:', result.results.length);
       return result;
     } catch (error) {
       console.error('Error fetching articles:', error);
@@ -71,14 +65,13 @@ export const searchArticles = createAsyncThunk(
       const params: GetArticlesParams = {
         limit: pageSize,
         offset: (currentPage - 1) * pageSize,
-        search: searchQuery,
       };
 
       if (sortBy) {
         params.order = sortBy;
       }
 
-      console.log('Searching articles with params:', params);
+      console.log('Searching articles by title with params:', { searchQuery, ...params });
       const result = await spaceflightApi.searchArticles(searchQuery, params);
       console.log('Search result, articles count:', result.results.length);
       return result;
