@@ -1,0 +1,189 @@
+.managementPage {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.header h1 {
+  margin: 0;
+  color: #1a1a2e;
+  font-size: 28px;
+}
+
+.createButton {
+  padding: 10px 24px;
+  background: #0066cc;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: background 0.2s;
+}
+
+.createButton:hover {
+  background: #0052a3;
+}
+
+.stats {
+  display: flex;
+  gap: 24px;
+  padding: 16px 20px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.stats p {
+  margin: 0;
+  font-size: 14px;
+  color: #555;
+}
+
+.stats strong {
+  color: #1a1a2e;
+}
+
+.articlesGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.articleCard {
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.articleCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+
+.articleImage {
+  width: 100%;
+  height: 160px;
+  overflow: hidden;
+  background: #f0f0f0;
+}
+
+.articleImage img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.articleInfo {
+  padding: 16px;
+}
+
+.articleInfo h3 {
+  margin: 0 0 8px 0;
+  font-size: 16px;
+  color: #1a1a2e;
+  line-height: 1.3;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  line-clamp: 2; /* ✅ Добавлено стандартное свойство */
+  overflow: hidden;
+}
+
+.articleSummary {
+  font-size: 14px;
+  color: #666;
+  margin: 0 0 12px 0;
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  line-clamp: 3; /* ✅ Добавлено стандартное свойство */
+  overflow: hidden;
+}
+
+.articleMeta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+  color: #888;
+  margin: 0 0 12px 0;
+}
+
+.newsSite {
+  font-weight: 600;
+  color: #0066cc;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.date {
+  color: #999;
+}
+
+.articleActions {
+  display: flex;
+  gap: 8px;
+}
+
+.editButton,
+.deleteButton {
+  padding: 6px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 500;
+  transition: background 0.2s;
+}
+
+.editButton {
+  background: #4caf50;
+  color: white;
+}
+
+.editButton:hover {
+  background: #388e3c;
+}
+
+.deleteButton {
+  background: #d32f2f;
+  color: white;
+}
+
+.deleteButton:hover {
+  background: #b71c1c;
+}
+
+.emptyState {
+  text-align: center;
+  padding: 60px 20px;
+  background: #f8f9fa;
+  border-radius: 8px;
+}
+
+.emptyState p {
+  margin: 0;
+  font-size: 18px;
+  color: #666;
+}
+
+.emptyStateSub {
+  margin-top: 8px !important;
+  font-size: 14px !important;
+  color: #999 !important;
+}

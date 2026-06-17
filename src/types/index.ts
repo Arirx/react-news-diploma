@@ -37,6 +37,16 @@ export interface Event {
   provider: string;
 }
 
+export interface ArticleFormData {
+  title: string;
+  summary: string;
+  image_url: string;
+  news_site: string;
+  url: string;
+}
+
+export type CreateArticleData = Omit<Article, 'id'>;
+
 export interface GetArticlesParams {
   limit?: number;
   offset?: number;
@@ -62,4 +72,10 @@ export interface ArticlesState {
   pageSize: number;
   searchQuery: string;
   sortBy: typeof SORT_OPTIONS[keyof typeof SORT_OPTIONS];
+}
+
+export interface ModalState {
+  isOpen: boolean;
+  mode: 'create' | 'edit';
+  articleId?: number;
 }

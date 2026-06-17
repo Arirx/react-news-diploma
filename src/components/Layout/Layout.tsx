@@ -24,6 +24,12 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
             >
               Home
             </Link>
+            <Link 
+              to={ROUTES.ARTICLE_MANAGEMENT} 
+              className={`${styles.navLink} ${location.pathname === ROUTES.ARTICLE_MANAGEMENT ? styles.active : ''}`}
+            >
+              Article Management
+            </Link>
           </nav>
         </div>
       </header>

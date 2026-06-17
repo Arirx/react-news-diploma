@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Article, ArticlesState } from '../../types';
+import { Article, ArticlesState, CreateArticleData } from '../../types';
 import { fetchArticles, fetchArticleById, searchArticles } from './articlesThunks';
 import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE, SORT_OPTIONS } from '../../constants';
 
@@ -14,6 +14,8 @@ const initialState: ArticlesState = {
   searchQuery: '',
   sortBy: SORT_OPTIONS.NEWEST,
 };
+
+let localIdCounter = 10000;
 
 const articlesSlice = createSlice({
   name: 'articles',
@@ -35,6 +37,44 @@ const articlesSlice = createSlice({
     },
     clearError: (state) => {
       state.error = null;
+    },
+    
+    addArticle: (state, action: PayloadAction<CreateArticleData>) => {
+      const newArticle: Article = {
+        id: localIdCounter++,
+        ...action.payload,
+      };
+      state.articles = [newArticle, ...state.articles];
+      state.totalCount += 1;
+    },
+    
+    updateArticle: (state, action: PayloadAction<Article>) => {
+      const index = state.articles.findIndex((a: Article) => a.id === action.payload.id);
+      if (index !== -1) {
+        state.articles[index] = {
+          ...action.payload,
+          updated_at: new Date().toISOString(),
+        };
+      }
+      if (state.currentArticle?.id === action.payload.id) {
+        state.currentArticle = {
+          ...action.payload,
+          updated_at: new Date().toISOString(),
+        };
+      }
+    },
+    
+    deleteArticle: (state, action: PayloadAction<number>) => {
+      state.articles = state.articles.filter((a: Article) => a.id !== action.payload);
+      state.totalCount -= 1;
+      if (state.currentArticle?.id === action.payload) {
+        state.currentArticle = null;
+      }
+    },
+    
+    clearAllArticles: (state) => {
+      state.articles = [];
+      state.totalCount = 0;
     },
   },
   extraReducers: (builder) => {
@@ -86,6 +126,10 @@ export const {
   setSortBy,
   clearCurrentArticle,
   clearError,
+  addArticle,
+  updateArticle,
+  deleteArticle,
+  clearAllArticles,
 } = articlesSlice.actions;
 
 export default articlesSlice.reducer;

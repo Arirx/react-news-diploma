@@ -36,6 +36,7 @@ export const ROUTES = {
   HOME: '/',
   ARTICLE: '/article/:id',
   ARTICLE_BY_ID: (id: number | string) => `/article/${id}`,
+  ARTICLE_MANAGEMENT: '/article-management',
   NOT_FOUND: '/404',
 } as const;
 

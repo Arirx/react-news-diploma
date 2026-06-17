@@ -1,0 +1,91 @@
+.articleForm {
+  background: white;
+  padding: 24px;
+  border-radius: 8px;
+  max-width: 600px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.articleForm h2 {
+  margin: 0 0 24px 0;
+  color: #1a1a2e;
+  font-size: 24px;
+}
+
+.formGroup {
+  margin-bottom: 16px;
+}
+
+.formGroup label {
+  display: block;
+  margin-bottom: 4px;
+  font-weight: 600;
+  color: #333;
+  font-size: 14px;
+}
+
+.formGroup input,
+.formGroup textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 2px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+  transition: border-color 0.2s;
+  box-sizing: border-box;
+}
+
+.formGroup input:focus,
+.formGroup textarea:focus {
+  outline: none;
+  border-color: #0066cc;
+}
+
+.formGroup input.error,
+.formGroup textarea.error {
+  border-color: #d32f2f;
+}
+
+.errorMessage {
+  color: #d32f2f;
+  font-size: 12px;
+  margin-top: 4px;
+  display: block;
+}
+
+.formActions {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  margin-top: 24px;
+}
+
+.cancelButton,
+.submitButton {
+  padding: 10px 24px;
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.cancelButton {
+  background: #f5f5f5;
+  color: #333;
+}
+
+.cancelButton:hover {
+  background: #e0e0e0;
+}
+
+.submitButton {
+  background: #0066cc;
+  color: white;
+}
+
+.submitButton:hover {
+  background: #0052a3;
+}
